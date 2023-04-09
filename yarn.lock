@@ -297,12 +297,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-beautiful-dnd@npm:^13.1.2":
-  version: 13.1.2
-  resolution: "@types/react-beautiful-dnd@npm:13.1.2"
+"@types/react-beautiful-dnd@npm:^13.1.4":
+  version: 13.1.4
+  resolution: "@types/react-beautiful-dnd@npm:13.1.4"
   dependencies:
     "@types/react": "*"
-  checksum: 28372854fcd4b7546aabe55ee6569da59fad10f117929cff8a9c6f928448e4dd08ed1139facca33232833b9de100edf017aab9a0ee34065f8fc0e2a7a1262b2c
+  checksum: 76220f1031721e73f712cf0021de6a3cf4049260ec29996cd587876ebd6ed01b9c31d8efb5cf230eb4d2b6259525ffe0f3054667732d30c79df37e49f9398c5e
   languageName: node
   linkType: hard
 
@@ -342,13 +342,6 @@ __metadata:
   version: 0.16.2
   resolution: "@types/scheduler@npm:0.16.2"
   checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:^9.0.1":
-  version: 9.0.1
-  resolution: "@types/uuid@npm:9.0.1"
-  checksum: c472b8a77cbeded4bc529220b8611afa39bd64677f507838f8083d8aac8033b1f88cb9ddaa2f8589e0dcd2317291d0f6e1379f82d5ceebd6f74f3b4825288e00
   languageName: node
   linkType: hard
 
@@ -502,9 +495,8 @@ __metadata:
   dependencies:
     "@types/node": 18.7.15
     "@types/react": 18.0.18
-    "@types/react-beautiful-dnd": ^13.1.2
+    "@types/react-beautiful-dnd": ^13.1.4
     "@types/react-dom": 18.0.6
-    "@types/uuid": ^9.0.1
     autoprefixer: ^10.4.8
     eslint: 8.23.0
     eslint-config-next: 12.2.5

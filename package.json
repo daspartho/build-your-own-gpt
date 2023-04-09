@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/react-beautiful-dnd": "^13.1.2",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-beautiful-dnd": "^13.1.1",
@@ -19,8 +18,8 @@
   "devDependencies": {
     "@types/node": "18.7.15",
     "@types/react": "18.0.18",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-dom": "18.0.6",
-    "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.8",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
