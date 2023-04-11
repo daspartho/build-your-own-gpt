@@ -17,7 +17,7 @@ const defaultComponents: AIBlock[] = [
     name: "self attention",
     label: "n_head",
     value: 4,
-    status: Status.Backlog,
+    status: Status.Panel,
     color: "bg-blue-600",
     hasInput: true,
     isDone: false,
@@ -26,7 +26,7 @@ const defaultComponents: AIBlock[] = [
     id: 1,
     name: "layernorm",
     value: "layernorm",
-    status: Status.Backlog,
+    status: Status.Panel,
     color: "bg-red-600",
     hasInput: false,
     isDone: false,
@@ -36,7 +36,7 @@ const defaultComponents: AIBlock[] = [
     name: "dropout",
     label: "dropout",
     value: 0.1,
-    status: Status.Backlog,
+    status: Status.Panel,
     color: "bg-amber-600",
     hasInput: true,
     isDone: false,
@@ -46,7 +46,7 @@ const defaultComponents: AIBlock[] = [
     name: "mlp",
     label: "n_proj",
     value: 256,
-    status: Status.Backlog,
+    status: Status.Panel,
     color: "bg-purple-600",
     hasInput: true,
     isDone: false,
@@ -54,7 +54,6 @@ const defaultComponents: AIBlock[] = [
 ];
 
 const Home: NextPage = () => {
-  const [name, setName] = useState<string>("");
   const [availableBlocks, setAvailableBlocks] =
     useState<AIBlock[]>(defaultComponents);
   const [userBlocks, setUserBlocks] = useState<AIBlock[]>([]);
@@ -70,25 +69,26 @@ const Home: NextPage = () => {
       let parsed = JSON.parse(userBlocks);
       setUserBlocks(parsed);
     }
+
+    window.localStorage.clear();
   }, []);
 
-  const addNewTodo = (e: React.FormEvent) => {
-    e.preventDefault();
+  const addNewBlock = ({ name, value, color, hasInput, isDone }: AIBlock) => {
+    // e.preventDefault();
     if (name) {
-      const newTodo = {
+      const newBlock = {
         id: Date.now(),
         name,
-        value: 0,
-        status: Status.Backlog,
-        color: "blue-600",
-        hasInput: true,
-        isDone: false,
+        value,
+        status: Status.Model,
+        color,
+        hasInput,
+        isDone,
       };
 
-      setUserBlocks([...userBlocks, newTodo]);
-
-      setName("");
-    }
+      setUserBlocks([...userBlocks, newBlock]);
+      return newBlock;
+    } else throw new Error("error creating block");
   };
 
   const onDragEndHandler = (result: DropResult) => {
@@ -108,7 +108,7 @@ const Home: NextPage = () => {
     switch (source.droppableId) {
       case ComponentStatus.Panel:
         add = availableBlocks[source.index];
-        backlog.splice(source.index, 1);
+        // backlog.splice(source.index, 1);
         break;
       case ComponentStatus.Model:
         add = active[source.index];
@@ -122,7 +122,16 @@ const Home: NextPage = () => {
           backlog.splice(destination.index, 0, add);
           break;
         case ComponentStatus.Model:
-          active.splice(destination.index, 0, add);
+          const { id, name, value, status, color, hasInput, isDone } =
+            availableBlocks[source.index];
+          active.splice(
+            destination.index,
+            0,
+            addNewBlock({ id, name, value, status, color, hasInput, isDone })
+          );
+
+          console.log(active);
+
           break;
       }
     }

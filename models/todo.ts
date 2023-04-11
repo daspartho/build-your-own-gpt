@@ -10,8 +10,8 @@ export interface AIBlock {
 }
 
 export enum Status {
-  Backlog,
-  Active,
+  Panel,
+  Model,
   Done,
 }
 

@@ -119,14 +119,13 @@ const AIBlockItem: React.FC<Props> = ({
                 )}
               </div>
             )}
-            {block.status == Status.Active && (
-              <span
-                className="ml-[10px] text-[25px] cursor-pointer"
-                onClick={handleDelete}
-              >
-                <AiFillDelete />
-              </span>
-            )}
+
+            <span
+              className="ml-[10px] text-[25px] cursor-pointer"
+              onClick={handleDelete}
+            >
+              <AiFillDelete />
+            </span>
           </div>
         </form>
       )}

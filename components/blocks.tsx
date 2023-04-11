@@ -49,7 +49,7 @@ const Blocks: React.FC<Props> = ({
         {(droppableProvided, droppableSnapshot) => (
           <form
             className={`bg-black border px-5 py-3 rounded-md  w-[100%]`}
-            onSubmit={(event) => {
+            onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
               event.preventDefault();
               const reqParams = [nEmbed, blockSize, act];
               const req = {
@@ -100,10 +100,6 @@ const Blocks: React.FC<Props> = ({
                 Train Model
               </button>
             </div>
-
-            {/* <span className="text-white text-2xl font-semibold p-[40px]">
-              My Model
-            </span> */}
             <div
               className={`mt-[8px] bg-black h-[88%] border px-5 py-3 rounded-md  w-[100%] ${
                 droppableSnapshot.isDraggingOver ? "opacity-80" : ""

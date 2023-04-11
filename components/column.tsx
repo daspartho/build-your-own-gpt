@@ -1,15 +1,15 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Todo } from "../models/todo";
-import TodoItem from "./aiblockitem";
+import { AIBlock } from "../models/todo";
+import AIBlockItem from "./aiblockitem";
 
 type Props = {
   droppableId: string;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  blocks: AIBlock[];
+  setBlocks: React.Dispatch<React.SetStateAction<AIBlock[]>>;
 };
 
-const Column: React.FC<Props> = ({ droppableId, todos, setTodos }) => (
+const Column: React.FC<Props> = ({ droppableId, blocks, setBlocks }) => (
   <Droppable droppableId={droppableId}>
     {(droppableProvided, droppableSnapshot) => (
       <div
@@ -18,13 +18,13 @@ const Column: React.FC<Props> = ({ droppableId, todos, setTodos }) => (
         {...droppableProvided.droppableProps}
       >
         <span className="text-white text-2xl font-semibold">Backlog</span>
-        {todos.map((todo, index) => (
-          <TodoItem
+        {blocks.map((block, index) => (
+          <AIBlockItem
             index={index}
-            key={todo.id}
-            todo={todo}
-            todos={todos}
-            setTodos={setTodos}
+            key={block.id}
+            block={block}
+            blocks={blocks}
+            setBlocks={setBlocks}
           />
         ))}
       </div>
