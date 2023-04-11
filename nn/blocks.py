@@ -1,21 +1,41 @@
 import torch
 from torch import nn
 
+act_map = {
+    'relu': nn.ReLU(),
+    'gelu': nn.GELU(),
+    'tanh': nn.Tanh(),
+}
+
+class MLP(nn.Module):
+
+    def __init__(self, n_embd, n_proj, act):
+        super().__init__()
+
+        self.net = nn.Sequential(
+            nn.Linear(n_embd, n_proj),
+            act_map[act],
+            nn.Linear(n_proj, n_embd),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
 class Model(nn.Module):
 
-    def __init__(self, vocab_size, block_size, n_embd):
+    def __init__(self, vocab_size, block_size, n_embd, n_proj, act): # TODO: take a object containing the custom architecture structure and parameters
         super().__init__()
-        
-        self.n_embd = n_embd
+
         self.token_embedding = nn.Embedding(vocab_size, n_embd)
         self.position_embedding = nn.Embedding(block_size, n_embd)
         self.lm_head = nn.Linear(n_embd, vocab_size)
-        self.architecture = nn.Sequential() # TODO: implement code to build the custom architecture
+        self.architecture = nn.Sequential(MLP(n_embd, n_proj, act)) # TODO: implement code to build the custom architecture
     
     def forward(self, x):
         x = self.token_embedding(x) + self.position_embedding(torch.arange(x.shape[-1]))
         x = self.architecture(x)
         return self.lm_head(x)
+
 
 if __name__ == "__main__":
 
@@ -39,7 +59,9 @@ if __name__ == "__main__":
     print("Tokenized Input Shape: \n", tokenized_input.shape)
 
     n_embd = 16
-    model = Model(vocab_size, block_size, n_embd)
+    n_proj = 32
+    act = 'gelu'
+    model = Model(vocab_size, block_size, n_embd, n_proj, act)
     model_output = model(tokenized_input)
     print("Model Output: \n", model_output)
     print("Model Output Shape: \n", model_output.shape)
