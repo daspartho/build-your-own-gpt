@@ -19,8 +19,3 @@ export enum ComponentStatus {
   Panel = "Panel",
   Model = "Model",
 }
-
-export enum TodosView {
-  KanbanView = "KanbanView",
-  WeeklyView = "WeeklyView",
-}

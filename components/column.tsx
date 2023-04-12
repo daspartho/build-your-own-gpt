@@ -1,6 +1,6 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { AIBlock } from "../models/todo";
+import { AIBlock } from "../models/block";
 import AIBlockItem from "./aiblockitem";
 
 type Props = {

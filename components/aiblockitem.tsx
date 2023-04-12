@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
-import { AIBlock, Status } from "../models/todo";
+import { AIBlock, Status } from "../models/block";
 
 interface Props {
   hasDoneIcon?: boolean;
@@ -79,7 +79,7 @@ const AIBlockItem: React.FC<Props> = ({
           ref={draggableProvided.innerRef}
         >
           <span className="flex-1">{block.name}</span>
-          <div className="w-full flex justify-center items-center text-center ">
+          <div className="w-full flex justify-center items-center text-center">
             {block.hasInput && (
               <>
                 {block.label && <span>{block.label}:</span>}
@@ -88,7 +88,7 @@ const AIBlockItem: React.FC<Props> = ({
                 ) : edit ? (
                   <input
                     autoFocus
-                    className="w-[50%] text-black text-center px-1 py-2 flex-1 outline-none self-end rounded-md "
+                    className="w-[50%] text-black text-center px-1 py-2 flex-1 outline-none self-end rounded-md"
                     type="text"
                     ref={inputRef}
                     value={editValue}
@@ -100,32 +100,31 @@ const AIBlockItem: React.FC<Props> = ({
               </>
             )}
 
-            {block.hasInput && (
-              <div className="flex gap-1">
+            <div className="flex gap-1">
+              {block.hasInput && (
                 <span
                   className="ml-[10px] text-[25px] cursor-pointer"
                   onClick={handleEdit}
                 >
                   <AiFillEdit />
                 </span>
+              )}
 
-                {hasDoneIcon && (
+              {/* {hasDoneIcon && (
                   <span
                     className="ml-[10px] text-[25px] cursor-pointer"
                     onClick={handleDone}
                   >
                     <MdDone />
                   </span>
-                )}
-              </div>
-            )}
-
-            <span
-              className="ml-[10px] text-[25px] cursor-pointer"
-              onClick={handleDelete}
-            >
-              <AiFillDelete />
-            </span>
+                )} */}
+              <span
+                className="ml-[10px] text-[25px] cursor-pointer self-end"
+                onClick={handleDelete}
+              >
+                <AiFillDelete />
+              </span>
+            </div>
           </div>
         </form>
       )}

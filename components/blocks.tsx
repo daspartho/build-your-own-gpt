@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Status, AIBlock, ComponentStatus } from "../models/todo";
+import { Status, AIBlock, ComponentStatus } from "../models/block";
 import AIBlockItem from "./aiblockitem";
+import { PlayIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   availableBlocks: AIBlock[];
@@ -56,7 +57,16 @@ const Blocks: React.FC<Props> = ({
                 userBlocks,
                 reqParams,
               };
-              console.log(req);
+
+              fetch("http://localhost:3000/api/post", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(req),
+              }).then((postResponse) => {
+                console.log(postResponse);
+              });
             }}
           >
             <div className="relative static text-black border bg-red-300 flex space-x-8 w-full h-[67.5px] justify-center items-center rounded-md">
@@ -64,7 +74,7 @@ const Blocks: React.FC<Props> = ({
                 n_embed
                 <input
                   id="nembed"
-                  className="text-white w-[100px] text-center ml-2"
+                  className="text-white w-[100px] text-center ml-2 p-2"
                   type="text"
                   placeholder="0"
                   value={nEmbed}
@@ -75,7 +85,7 @@ const Blocks: React.FC<Props> = ({
                 block_size
                 <input
                   id="blocksize"
-                  className="text-white w-[100px] text-center ml-2"
+                  className="text-white w-[100px] text-center ml-2 p-2"
                   type="text"
                   placeholder="0"
                   value={blockSize}
@@ -83,21 +93,36 @@ const Blocks: React.FC<Props> = ({
                 />
               </label>
               <label htmlFor="act">
-                act
-                <input
+                <select
+                  name="acts"
+                  id="act"
+                  className="text-white text-center p-2"
+                >
+                  <option value="" className="">
+                    -- choose --
+                  </option>
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="hamster">Hamster</option>
+                  <option value="parrot">Parrot</option>
+                  <option value="spider">Spider</option>
+                  <option value="goldfish">Goldfish</option>
+                </select>
+                {/* act */}
+                {/* <input
                   id="act"
                   className="text-white w-[100px] text-center ml-2"
                   type="text"
                   placeholder=""
                   value={act}
                   onChange={(e) => setAct(e.target.value)}
-                />
+                /> */}
               </label>
               <button
                 type="submit"
                 className="absolute right-8 border border-black p-2 rounded-md bg-neutral-800 text-white"
               >
-                Train Model
+                <PlayIcon className="h-6 w-6" />
               </button>
             </div>
             <div

@@ -7,7 +7,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import Blocks from "../components/blocks";
 
-import { Status, AIBlock, ComponentStatus } from "../models/todo";
+import { Status, AIBlock, ComponentStatus } from "../models/block";
 
 import styles from "../styles/Home.module.css";
 
