@@ -10,7 +10,7 @@ act_map = {
 
 
 class MLP(nn.Module):
-    def __init__(self, n_embd, n_proj, act):
+    def __init__(self, n_embd, n_proj, act, skip):
         super().__init__()
 
         self.net = nn.Sequential(
@@ -18,13 +18,16 @@ class MLP(nn.Module):
             act_map[act],
             nn.Linear(n_proj, n_embd),
         )
+        self.skip = skip
 
     def forward(self, x):
+        if self.skip:
+            return x + self.net(x)
         return self.net(x)
 
 
 class Attention(nn.Module):
-    def __init__(self, n_embd, block_size, n_head, bias):
+    def __init__(self, n_embd, block_size, n_head, bias, skip):
         super().__init__()
 
         assert n_embd % n_head == 0
@@ -42,6 +45,7 @@ class Attention(nn.Module):
         )
         self.n_head = n_head
         self.n_embd = n_embd
+        self.skip = skip
 
     def forward(self, x):
         (
@@ -72,12 +76,14 @@ class Attention(nn.Module):
         )  # re-assemble all head outputs side by side
 
         # output projection
+        if self.skip:
+            return x + self.c_proj(out)
         return self.c_proj(out)
 
 
 class Model(nn.Module):
     def __init__(
-        self, vocab_size, block_size, n_embd, n_head, bias, n_proj, act
+        self, vocab_size, block_size, n_embd, n_head, bias, n_proj, act, skip
     ):  # TODO: take a object containing the custom architecture structure and parameters
         super().__init__()
 
@@ -85,8 +91,8 @@ class Model(nn.Module):
         self.position_embedding = nn.Embedding(block_size, n_embd)
         self.lm_head = nn.Linear(n_embd, vocab_size)
         self.architecture = nn.Sequential(
-            Attention(n_embd, block_size, n_head, bias),
-            MLP(n_embd, n_proj, act),
+            Attention(n_embd, block_size, n_head, bias, skip),
+            MLP(n_embd, n_proj, act, skip),
         )  # TODO: implement code to build the custom architecture
 
     def forward(self, x):
@@ -124,7 +130,8 @@ if __name__ == "__main__":
     bias = False
     n_proj = 32
     act = "gelu"
-    model = Model(vocab_size, block_size, n_embd, n_head, bias, n_proj, act)
+    skip = True
+    model = Model(vocab_size, block_size, n_embd, n_head, bias, n_proj, act, skip)
     model_output = model(tokenized_input)
     print("Model Output: \n", model_output)
     print("Model Output Shape: \n", model_output.shape)
